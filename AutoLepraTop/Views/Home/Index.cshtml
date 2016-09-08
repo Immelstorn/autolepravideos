@@ -1,0 +1,26 @@
+﻿@using AutoLepraTop.Models
+@model MainModel
+
+@{
+    ViewBag.Title = "Auto lepra video top";
+    DateTime dt;
+}
+
+<div class="ui vertically divided  grid">
+    @foreach(Video video in Model.Videos)
+    {
+        dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(video.TimeStamp);
+        <div class="row">
+            <div class="four wide column"></div>
+            <div class="two wide center aligned column">
+                <p><a href="@video.Link">@video.Vote</a></p>
+                @(dt.ToString("d")) <br />
+                @(dt.ToString("t")) UTC
+            </div>
+            <div class="five wide column">
+                <p>@Html.Raw(video.Comment)</p>
+            </div>
+            <div class="five wide column"></div>
+        </div>
+    }
+</div>
