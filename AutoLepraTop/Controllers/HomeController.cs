@@ -9,7 +9,6 @@ namespace AutoLepraTop.Controllers
 {
     public class HomeController : Controller
     {
-        private string _token = ConfigurationManager.AppSettings["token"];
 
         const int ElementsOnPage = 50;
         public ActionResult Index()
