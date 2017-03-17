@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 using AutoLepraTop.BL.Models;
+using AutoLepraTop.DB.Models;
 
 using DBPost = AutoLepraTop.DB.Models.Post;
 
 using Newtonsoft.Json;
 
 using RestSharp;
+
+using Post = AutoLepraTop.BL.Models.Post;
 
 namespace AutoLepraTop.BL.Managers
 {
@@ -66,7 +70,15 @@ namespace AutoLepraTop.BL.Managers
                 PostId = posts.First().ID,
                 Id = dbPosts.Max(p => p.Id) + 1
             });
-            
+
+            using(var db = new AutoLepraTopDbContext())
+            {
+                foreach(var dbPost in dbPosts)
+                {
+                    db.Posts.AddOrUpdate(dbPost);
+                }
+                db.SaveChanges();
+            }
 
             return null;
         }

@@ -5,14 +5,14 @@ namespace AutoLepraTop.DB.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AutoLepraTop.DB.Models.AutoLepraVideosDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AutoLepraTop.DB.Models.AutoLepraTopDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AutoLepraTop.DB.Models.AutoLepraVideosDbContext context)
+        protected override void Seed(AutoLepraTop.DB.Models.AutoLepraTopDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
