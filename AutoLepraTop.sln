@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLepraTop", "AutoLepraTop\AutoLepraTop.csproj", "{E986B1D7-1334-4BCD-AFF2-0052627BDEA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLepra.Parser", "AutoLepra.Parser\AutoLepra.Parser.csproj", "{599726A6-3D54-44B5-B825-5C661AB2B008}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLepraTop.DB", "AutoLepraTop.DB\AutoLepraTop.DB.csproj", "{C2F6B826-CFF9-470E-A4F6-B01EFAB7246E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{E986B1D7-1334-4BCD-AFF2-0052627BDEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E986B1D7-1334-4BCD-AFF2-0052627BDEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E986B1D7-1334-4BCD-AFF2-0052627BDEA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{599726A6-3D54-44B5-B825-5C661AB2B008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{599726A6-3D54-44B5-B825-5C661AB2B008}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{599726A6-3D54-44B5-B825-5C661AB2B008}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{599726A6-3D54-44B5-B825-5C661AB2B008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F6B826-CFF9-470E-A4F6-B01EFAB7246E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F6B826-CFF9-470E-A4F6-B01EFAB7246E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F6B826-CFF9-470E-A4F6-B01EFAB7246E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F6B826-CFF9-470E-A4F6-B01EFAB7246E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

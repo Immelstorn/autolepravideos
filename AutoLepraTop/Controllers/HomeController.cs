@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 using AutoLepraTop.Models;
@@ -8,6 +9,8 @@ namespace AutoLepraTop.Controllers
 {
     public class HomeController : Controller
     {
+        private string _token = ConfigurationManager.AppSettings["token"];
+
         const int ElementsOnPage = 50;
         public ActionResult Index()
         {
