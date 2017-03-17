@@ -3,8 +3,11 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 using AutoLepraTop.BL.Models;
+
+using DBPost = AutoLepraTop.DB.Models.Post;
 
 using Newtonsoft.Json;
 
@@ -19,7 +22,7 @@ namespace AutoLepraTop.BL.Managers
         private readonly string _token = "Bearer " + ConfigurationManager.AppSettings["token"];
         private readonly RestClient _client = new RestClient("https://leprosorium.ru/api/");
 
-        public object GetAllPostsFromAuto()
+        public object FindAllPosts()
         {
             var request = new RestRequest("users/tusinda/posts/");
             request.AddHeader("Authorization", _token);
@@ -50,6 +53,20 @@ namespace AutoLepraTop.BL.Managers
             var comments = GetPostComments(posts.First().ID);
             var previous = comments.First(c => c.Body.ToLowerInvariant().Contains("предыдущие посты")).Body;
             //parse ids of previous posts
+            var r = new Regex("comments\\/(?<id>\\d*)[\\/#\"].*?(\\d{1,3})<\\/a>");
+            var matches  = r.Matches(previous);
+
+            var dbPosts = matches.Cast<Match>()
+                    .Select(m => new DBPost {
+                        Id = int.Parse(m.Groups[1].Value),
+                        PostId = int.Parse(m.Groups[2].Value),
+                    }).ToList();
+
+            dbPosts.Add(new DBPost {
+                PostId = posts.First().ID,
+                Id = dbPosts.Max(p => p.Id) + 1
+            });
+            
 
             return null;
         }

@@ -14,7 +14,7 @@ namespace AutoLepraTop.API.Controllers
         private LepraManager _manager = new LepraManager();
         public IHttpActionResult Get()
         {
-            return Ok(_manager.GetAllPostsFromAuto());
+            return Ok(_manager.FindAllPosts());
         }
 
     }
