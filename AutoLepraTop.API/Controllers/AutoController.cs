@@ -13,10 +13,14 @@ namespace AutoLepraTop.API.Controllers
     public class AutoController : ApiController
     {
         private LepraManager _manager = new LepraManager();
+
+        public AutoController()
+        {
+            Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
+        }
+
         public IHttpActionResult Get()
         {
-
-            Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
             return Ok();
         }
 

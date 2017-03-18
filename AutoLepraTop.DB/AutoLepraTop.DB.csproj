@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,8 +58,21 @@
     <Compile Include="Migrations\201703181211317_addSettingsTable.Designer.cs">
       <DependentUpon>201703181211317_addSettingsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703181258572_addCommentsAndChangeIds.cs" />
+    <Compile Include="Migrations\201703181258572_addCommentsAndChangeIds.Designer.cs">
+      <DependentUpon>201703181258572_addCommentsAndChangeIds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703181308126_setIdToNogereate.cs" />
+    <Compile Include="Migrations\201703181308126_setIdToNogereate.Designer.cs">
+      <DependentUpon>201703181308126_setIdToNogereate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703181430116_addCreatedDateToComment.cs" />
+    <Compile Include="Migrations\201703181430116_addCreatedDateToComment.Designer.cs">
+      <DependentUpon>201703181430116_addCreatedDateToComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoLepraTopDbContext.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +87,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703181211317_addSettingsTable.resx">
       <DependentUpon>201703181211317_addSettingsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703181258572_addCommentsAndChangeIds.resx">
+      <DependentUpon>201703181258572_addCommentsAndChangeIds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703181308126_setIdToNogereate.resx">
+      <DependentUpon>201703181308126_setIdToNogereate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703181430116_addCreatedDateToComment.resx">
+      <DependentUpon>201703181430116_addCreatedDateToComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

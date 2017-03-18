@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoLepraTop.DB.Models
 {
-    public class Post
+    public class Comment
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public string Body { get; set; }
+        public string Link { get; set; }
+        public int Rating { get; set; }
+        public DateTime Created { get; set; }
+
+        public Post Post { get; set; }
 
         public override bool Equals(object obj)
         {
-            var post = obj as Post;
-            return post != null && post.Id.Equals(Id);
+            var comment = obj as Comment;
+            return comment != null && comment.Id.Equals(Id);
         }
 
         public override int GetHashCode()
