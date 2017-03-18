@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using AutoLepraTop.BL.Models;
 using AutoLepraTop.DB.Models;
@@ -22,11 +25,43 @@ namespace AutoLepraTop.BL.Managers
     public class LepraManager
     {
         private const string Title = "странного хобби";
+        private const string LastUpdatedName = "LastUpdated";
 
         private readonly string _token = "Bearer " + ConfigurationManager.AppSettings["token"];
         private readonly RestClient _client = new RestClient("https://leprosorium.ru/api/");
 
-        public async void FindAllPostsAndSaveToDb()
+        public async void CheckAndUpdateDbIfNeeded()
+        {
+            using(var db = new AutoLepraTopDbContext())
+            {
+                var lastUpdatedSetting = await db.Settings.FirstOrDefaultAsync(s => s.Name.Equals(LastUpdatedName));
+                var lastUpdated = lastUpdatedSetting == null ? DateTime.MinValue : DateTime.Parse(lastUpdatedSetting.Value);
+//                if(DateTime.UtcNow - lastUpdated >= TimeSpan.FromHours(24))
+                {
+                    await ParseVideos();
+                    if(lastUpdatedSetting == null)
+                    {
+                        db.Settings.Add(new Setting {
+                            Name = LastUpdatedName,
+                            Value = DateTime.UtcNow.ToString()
+                        });
+                    }
+                    else
+                    {
+                        lastUpdatedSetting.Value = DateTime.UtcNow.ToString();
+                    }
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
+
+        private async Task ParseVideos()
+        {
+            await FindAllPostsAndSaveToDb();
+
+        }
+
+        private async Task FindAllPostsAndSaveToDb()
         {
             var request = new RestRequest("users/tusinda/posts/");
             request.AddHeader("Authorization", _token);
@@ -40,7 +75,7 @@ namespace AutoLepraTop.BL.Managers
             {
                 var param = request.Parameters.Find(p => p.Name.Equals("page"));
                 param.Value = page;
-                var response = _client.Execute(request);
+                var response = await _client.ExecuteTaskAsync(request);
                 if(response.StatusCode == HttpStatusCode.OK)
                 {
                     var result = JsonConvert.DeserializeObject<UserResponse>(response.Content);
@@ -54,7 +89,7 @@ namespace AutoLepraTop.BL.Managers
                 }
             }
 
-            var comments = GetPostComments(posts.First().ID);
+            var comments = await GetPostComments(posts.First().ID);
             var previous = comments.First(c => c.Body.ToLowerInvariant().Contains("предыдущие посты")).Body;
             //parse ids of previous posts
             var r = new Regex("comments\\/(?<id>\\d*)[\\/#\"]");
@@ -73,19 +108,23 @@ namespace AutoLepraTop.BL.Managers
             {
                 foreach(var dbPost in dbPosts)
                 {
+                    if(await db.Posts.AnyAsync(p => p.PostId.Equals(dbPost.PostId)))
+                    {
+                        continue;
+                    }
                     db.Posts.AddOrUpdate(dbPost);
                 }
                 await db.SaveChangesAsync();
             }
         }
 
-        private List<Comment> GetPostComments(int id)
+        private async Task<List<Comment>> GetPostComments(int id)
         {
             var request = new RestRequest($"posts/{id}/comments/");
             request.AddHeader("Authorization", _token);
             var comments = new List<Comment>();
 
-            var response = _client.Execute(request);
+            var response = await _client.ExecuteGetTaskAsync(request);
             if(response.StatusCode == HttpStatusCode.OK)
             {
                 var result = JsonConvert.DeserializeObject<CommentResponse>(response.Content);

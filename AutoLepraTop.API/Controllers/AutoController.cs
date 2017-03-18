@@ -15,7 +15,8 @@ namespace AutoLepraTop.API.Controllers
         private LepraManager _manager = new LepraManager();
         public IHttpActionResult Get()
         {
-            Task.Factory.StartNew(() => _manager.FindAllPostsAndSaveToDb());
+
+            Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
             return Ok();
         }
 
