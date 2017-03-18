@@ -26,7 +26,7 @@ namespace AutoLepraTop.BL.Managers
         private readonly string _token = "Bearer " + ConfigurationManager.AppSettings["token"];
         private readonly RestClient _client = new RestClient("https://leprosorium.ru/api/");
 
-        public object FindAllPosts()
+        public async void FindAllPostsAndSaveToDb()
         {
             var request = new RestRequest("users/tusinda/posts/");
             request.AddHeader("Authorization", _token);
@@ -38,7 +38,7 @@ namespace AutoLepraTop.BL.Managers
             //taking first tusinda's post with strange hobby
             while(!stop)
             {
-                var param = request.Parameters.Find(p=>p.Name.Equals("page"));
+                var param = request.Parameters.Find(p => p.Name.Equals("page"));
                 param.Value = page;
                 var response = _client.Execute(request);
                 if(response.StatusCode == HttpStatusCode.OK)
@@ -57,18 +57,16 @@ namespace AutoLepraTop.BL.Managers
             var comments = GetPostComments(posts.First().ID);
             var previous = comments.First(c => c.Body.ToLowerInvariant().Contains("предыдущие посты")).Body;
             //parse ids of previous posts
-            var r = new Regex("comments\\/(?<id>\\d*)[\\/#\"].*?(\\d{1,3})<\\/a>");
-            var matches  = r.Matches(previous);
+            var r = new Regex("comments\\/(?<id>\\d*)[\\/#\"]");
+            var matches = r.Matches(previous);
 
             var dbPosts = matches.Cast<Match>()
                     .Select(m => new DBPost {
-                        Id = int.Parse(m.Groups[1].Value),
-                        PostId = int.Parse(m.Groups[2].Value),
+                        PostId = int.Parse(m.Groups[1].Value)
                     }).ToList();
 
             dbPosts.Add(new DBPost {
-                PostId = posts.First().ID,
-                Id = dbPosts.Max(p => p.Id) + 1
+                PostId = posts.First().ID
             });
 
             using(var db = new AutoLepraTopDbContext())
@@ -77,10 +75,8 @@ namespace AutoLepraTop.BL.Managers
                 {
                     db.Posts.AddOrUpdate(dbPost);
                 }
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
-
-            return null;
         }
 
         private List<Comment> GetPostComments(int id)

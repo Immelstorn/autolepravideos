@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 using AutoLepraTop.BL.Managers;
@@ -14,7 +15,8 @@ namespace AutoLepraTop.API.Controllers
         private LepraManager _manager = new LepraManager();
         public IHttpActionResult Get()
         {
-            return Ok(_manager.FindAllPosts());
+            Task.Factory.StartNew(() => _manager.FindAllPostsAndSaveToDb());
+            return Ok();
         }
 
     }
