@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html ng-app="autoLepraTop">
+
+<head>
+    <title>Auto lepra videos top</title>
+
+    <script src="Scripts/third-party/angular.js"></script>
+    <script src="Scripts/third-party/angular-route.js"></script>
+<!--    <script src="Scripts/third-party/angular-animate.js"></script>-->
+<!--    <script src="Scripts/third-party/angular-sanitize.js"></script>-->
+    <script src="Scripts/third-party/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="Scripts/third-party/jquery-1.9.1.js"></script>
+    <script src="Scripts/third-party/bootstrap.js"></script>
+    <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="Content/style.css" rel="stylesheet"/>
+<!--    <script src="Scripts/app/app.js"></script>-->
+<!--    <script src="Scripts/app/BaseController.js"></script>-->
+<!--    <script src="Scripts/app/ListController.js"></script>-->
+<!--    <script src="Scripts/app/DetailsController.js"></script>-->
+<!--    <script src="Scripts/app/ManagerController.js"></script>-->
+<!--    <script src="Scripts/app/api.js"></script>-->
+</head>
+
+<body ng-controller="BaseController">
+    
+<div class="container">
+  <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/list">Auto lepra videos top</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/list">By date</a></li>
+                    <li><a href="#/manager">By rating</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="alert alert-danger" id="error" style="display: none;">
+        {{error}}
+    </div>
+
+
+    <div ng-view></div>
+    
+    <div id="loader" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Please wait while videos are loading</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="images/loading_spinner.gif" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
