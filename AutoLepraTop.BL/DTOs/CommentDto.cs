@@ -10,8 +10,8 @@ namespace AutoLepraTop.BL.Models
         {
             if(c != null)
             {
-                CommentID = c.Id;
-                PostID = c.Post_Id;
+                CommentID = c.LepraId;
+                PostID = c.Post.LepraId;
                 Rating = c.Rating;
                 Body = c.Body;
                 Created = c.Created;

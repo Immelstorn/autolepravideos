@@ -5,8 +5,8 @@ namespace AutoLepraTop.DB.Models
 {
     public class Comment
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
+        public int LepraId { get; set; }
         public string Body { get; set; }
         public string Link { get; set; }
         public int Rating { get; set; }
@@ -18,12 +18,12 @@ namespace AutoLepraTop.DB.Models
         public override bool Equals(object obj)
         {
             var comment = obj as Comment;
-            return comment != null && comment.Id.Equals(Id);
+            return comment != null && comment.LepraId.Equals(LepraId);
         }
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return LepraId.GetHashCode();
         }
     }
 }
