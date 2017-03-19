@@ -9,6 +9,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+using AutoLepraTop.API.Models;
 using AutoLepraTop.BL.Models;
 using AutoLepraTop.DB.Models;
 
@@ -30,6 +31,7 @@ namespace AutoLepraTop.BL.Managers
         private const string Title = "странного хобби";
         private const string LastUpdatedName = "LastUpdated";
         private const int CommentsToSave = 250;
+        private const int PageSize = 50;
 
         private readonly string _token = "Bearer " + ConfigurationManager.AppSettings["token"];
         private readonly RestClient _client = new RestClient("https://leprosorium.ru/api/");
@@ -57,6 +59,34 @@ namespace AutoLepraTop.BL.Managers
 
                     await ParseVideos();
                 }
+            }
+        }
+
+        public async Task<ListDto<CommentDto>> Get(int page, string sort)
+        {
+            using (var db = new AutoLepraTopDbContext())
+            {
+                var query = db.Comments as IQueryable<DBComment>;
+                
+                var count = await query.CountAsync();
+                query = sort.ToLowerInvariant().Equals("bydate") 
+                    ? query.OrderByDescending(c => c.Created) 
+                    : query.OrderByDescending(c => c.Rating);
+
+                query = query
+                        .Skip((page - 1) * PageSize)
+                        .Take(PageSize);
+
+                var comments = await query.ToListAsync();
+
+                var result = new ListDto<CommentDto>
+                {
+                    Comments = comments.Select(c => new CommentDto(c)).ToList(),
+                    Page = page,
+                    TotalItems = count,
+                    ItemsPerPage = PageSize,
+                };
+                return result;
             }
         }
 
@@ -138,48 +168,56 @@ namespace AutoLepraTop.BL.Managers
 
         private async Task FindAllPostsAndSaveToDb()
         {
-            var request = new RestRequest("users/tusinda/posts/");
-            request.AddHeader("Authorization", _token);
-            var page = 1;
-            request.AddParameter("page", page);
+            //            var request = new RestRequest("users/tusinda/posts/");
+            //            request.AddHeader("Authorization", _token);
+            //            var page = 1;
+            //            request.AddParameter("page", page);
+            //
+            //            var posts = new List<Post>();
+            //            var stop = false;
+            //            //taking first tusinda's post with strange hobby
+            //            while(!stop)
+            //            {
+            //                var param = request.Parameters.Find(p => p.Name.Equals("page"));
+            //                param.Value = page;
+            //                var response = await _client.ExecuteTaskAsync(request);
+            //                if(response.StatusCode == HttpStatusCode.OK)
+            //                {
+            //                    var result = JsonConvert.DeserializeObject<UserResponse>(response.Content);
+            //                    var videoPost = result.Posts.FirstOrDefault(p => p.Body != null && p.Body.ToLowerInvariant().Contains(Title));
+            //                    if(videoPost != null)
+            //                    {
+            //                        posts.Add(videoPost);
+            //                        stop = true;
+            //                    }
+            //                    page++;
+            //                }
+            //            }
+            //            var dbPosts = new List<DBPost>();
+            //            var comments = await GetPostComments(posts.First().ID);
+            //            var previous = comments.FirstOrDefault(c => c.Body.ToLowerInvariant().Contains("предыдущие посты"))?.Body;
+            //            //parse ids of previous posts
+            //            if(previous != null)
+            //            {
+            //                var r = new Regex("comments\\/(?<id>\\d*)[\\/#\"]");
+            //                var matches = r.Matches(previous);
+            //
+            //                dbPosts.AddRange(matches.Cast<Match>()
+            //                        .Select(m => new DBPost {
+            //                            Id = int.Parse(m.Groups["id"].Value)
+            //                        }).ToList());
+            //            }
+            //
+            //            dbPosts.Add(new DBPost {
+            //                Id = posts.First().ID
+            //            });
 
-            var posts = new List<Post>();
-            var stop = false;
-            //taking first tusinda's post with strange hobby
-            while(!stop)
-            {
-                var param = request.Parameters.Find(p => p.Name.Equals("page"));
-                param.Value = page;
-                var response = await _client.ExecuteTaskAsync(request);
-                if(response.StatusCode == HttpStatusCode.OK)
-                {
-                    var result = JsonConvert.DeserializeObject<UserResponse>(response.Content);
-                    var videoPost = result.Posts.FirstOrDefault(p => p.Body != null && p.Body.ToLowerInvariant().Contains(Title));
-                    if(videoPost != null)
-                    {
-                        posts.Add(videoPost);
-                        stop = true;
-                    }
-                    page++;
-                }
-            }
-
-            var comments = await GetPostComments(posts.First().ID);
-            var previous = comments.First(c => c.Body.ToLowerInvariant().Contains("предыдущие посты")).Body;
-            //parse ids of previous posts
-            var r = new Regex("comments\\/(?<id>\\d*)[\\/#\"]");
-            var matches = r.Matches(previous);
-
-            var dbPosts = matches.Cast<Match>()
-                    .Select(m => new DBPost {
-                        Id = int.Parse(m.Groups["id"].Value)
-                    }).ToList();
-
-            dbPosts.Add(new DBPost {
-                Id = posts.First().ID
+            var dbPosts = PostsNumbers.Posts.Select(p => new DBPost {
+                Id = p
             });
 
-            using(var db = new AutoLepraTopDbContext())
+
+            using (var db = new AutoLepraTopDbContext())
             {
                 foreach (var dbPost in dbPosts.Distinct())
                 {

@@ -82,6 +82,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\loading_spinner.gif" />
@@ -94,7 +95,14 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\third-party\angular-sanitize.js" />
+    <Content Include="Scripts\third-party\angular-sanitize.min.js" />
+    <Content Include="Scripts\third-party\angular-sanitize.min.js.map" />
     <None Include="Scripts\third-party\jquery-1.9.1-vsdoc.js" />
+    <Content Include="Scripts\app\api.js" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\BaseController.js" />
+    <Content Include="Scripts\app\ListController.js" />
     <Content Include="Scripts\third-party\bootstrap.js" />
     <Content Include="Scripts\third-party\bootstrap.min.js" />
     <Content Include="Scripts\third-party\jquery-1.9.1.js" />
@@ -108,6 +116,7 @@
     <Content Include="Scripts\third-party\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\third-party\angular.js" />
     <Content Include="Scripts\third-party\angular.min.js" />
+    <Content Include="Views\list.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,23 @@
+﻿<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Rating</th>
+            <th>Body</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        <tr ng-repeat="comment in Comments">
+            <td>{{comment.Created}}</td>
+            <td>{{comment.Rating}}</td>
+            <td ng-bind-html="comment.Body"></td>
+            <td><a target="_blank" href="https://auto.leprosorium.ru/comments/{{comment.PostID}}/#{{comment.CommentID}}">Go to comment</a></td>
+        </tr>
+        </tbody>
+    </table>
+   
+    <ul uib-pagination total-items="totalItems" ng-change="setPage()" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
+</div>

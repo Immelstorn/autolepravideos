@@ -7,20 +7,19 @@
     <script src="Scripts/third-party/angular.js"></script>
     <script src="Scripts/third-party/angular-route.js"></script>
 <!--    <script src="Scripts/third-party/angular-animate.js"></script>-->
-<!--    <script src="Scripts/third-party/angular-sanitize.js"></script>-->
+    <script src="Scripts/third-party/angular-sanitize.js"></script>
     <script src="Scripts/third-party/angular-ui/ui-bootstrap-tpls.js"></script>
     <script src="Scripts/third-party/jquery-1.9.1.js"></script>
     <script src="Scripts/third-party/bootstrap.js"></script>
     <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
     <link href="Content/bootstrap.css" rel="stylesheet" />
-    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet"/>
+
     <link href="Content/style.css" rel="stylesheet"/>
-<!--    <script src="Scripts/app/app.js"></script>-->
-<!--    <script src="Scripts/app/BaseController.js"></script>-->
-<!--    <script src="Scripts/app/ListController.js"></script>-->
-<!--    <script src="Scripts/app/DetailsController.js"></script>-->
-<!--    <script src="Scripts/app/ManagerController.js"></script>-->
-<!--    <script src="Scripts/app/api.js"></script>-->
+    <script src="Scripts/app/app.js"></script>
+    <script src="Scripts/app/BaseController.js"></script>
+    <script src="Scripts/app/ListController.js"></script>
+    <script src="Scripts/app/api.js"></script>
 </head>
 
 <body ng-controller="BaseController">
@@ -33,8 +32,8 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#/list">By date</a></li>
-                    <li><a href="#/manager">By rating</a></li>
+                    <li><a href="#/list?sort=bydate">By date</a></li>
+                    <li><a href="#/list?sort=byrating">By rating</a></li>
                 </ul>
             </div>
         </div>

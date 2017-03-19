@@ -5,8 +5,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 using AutoLepraTop.BL.Managers;
+using AutoLepraTop.BL.Models;
 
 namespace AutoLepraTop.API.Controllers
 {
@@ -19,9 +21,10 @@ namespace AutoLepraTop.API.Controllers
             Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
         }
 
-        public IHttpActionResult Get()
+        public async Task<JsonResult<ListDto<CommentDto>>> Get(int page = 1, string sort = "byrating")
         {
-            return Ok("ok");
+            var result = await _manager.Get(page, sort);
+            return Json(result);
         }
 
     }

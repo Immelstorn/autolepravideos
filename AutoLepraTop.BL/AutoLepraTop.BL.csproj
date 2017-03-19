@@ -62,11 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\CommentDto.cs" />
     <Compile Include="Managers\LepraManager.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentResponse.cs" />
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\DomainRespose.cs" />
+    <Compile Include="DTOs\ListDto.cs" />
+    <Compile Include="Models\PostsNumbers.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Post.cs" />
