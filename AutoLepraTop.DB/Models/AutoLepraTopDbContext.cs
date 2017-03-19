@@ -1,8 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Runtime.Remoting.Contexts;
-using System.Security.AccessControl;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace AutoLepraTop.DB.Models
 {
@@ -17,18 +13,7 @@ namespace AutoLepraTop.DB.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Post>().HasMany(p => p.Comments).WithRequired(c => c.Post);
-        }
-
-        public async Task SaveChangesWithIdentityAsync(string tableName)
-        {
-            using (var transaction = Database.BeginTransaction())
-            {
-                await Database.ExecuteSqlCommandAsync($"SET IDENTITY_INSERT [dbo].[{tableName}] ON");
-                await SaveChangesAsync();
-                await Database.ExecuteSqlCommandAsync($"SET IDENTITY_INSERT [dbo].[{tableName}] OFF");
-                transaction.Commit();
-            }
+            modelBuilder.Entity<Comment>().HasRequired(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.Post_Id);
         }
     }
 }

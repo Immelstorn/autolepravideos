@@ -36,7 +36,7 @@ namespace AutoLepraTop.BL.Managers
 
         public async void CheckAndUpdateDbIfNeeded()
         {
-            using(var db = new AutoLepraTopDbContext())
+            using (var db = new AutoLepraTopDbContext())
             {
                 var lastUpdatedSetting = await db.Settings.FirstOrDefaultAsync(s => s.Name.Equals(LastUpdatedName));
                 var lastUpdated = lastUpdatedSetting == null ? DateTime.MinValue : DateTime.Parse(lastUpdatedSetting.Value);
@@ -72,7 +72,7 @@ namespace AutoLepraTop.BL.Managers
             foreach(var post in posts)
             {
                 Debug.WriteLine($"Post {count++}");
-                var r = new Regex("href=\"(?<link>.*?youtube.*?)\"");
+                var r = new Regex("href=\"(?<link>https?:\\/\\/(www.)?(m.)?(youtube|youtu\\.be).*?)\"");
 
                 var comments = await GetPostComments(post.Id);
                 var dbcomments = new List<DBComment>();
@@ -89,23 +89,25 @@ namespace AutoLepraTop.BL.Managers
                         var dbcomment = new DBComment {
                             Body = comment.Body,
                             Id = comment.ID,
-                            Link = match.Groups[1].Value,
+                            Link = match.Groups["link"].Value,
                             Rating = comment.Rating,
                             Created = UnixTimeStampToDateTime(comment.Created),
-                            Post = post
+                            Post_Id = post.Id
                         };
                         dbcomments.Add(dbcomment);
                     }
 
-                    //saving each 250 comments to avoid EF hanging
+//                    saving each 250 comments to avoid EF hanging
                     if(dbcomments.Count >= CommentsToSave)
                     {
-                        Debug.WriteLine($"Inserting 250 dbcomments");
+                        Debug.WriteLine($"Inserting {CommentsToSave} dbcomments");
                         foreach(var dbcomment in dbcomments)
                         {
                             db.Comments.AddOrUpdate(dbcomment);
                         }
-                        await db.SaveChangesWithIdentityAsync("Comments");
+
+                        await db.BulkSaveChangesAsync(bulk => bulk.AllowUpdatePrimaryKeys = true);
+
                         dbcomments.Clear();
                         db.Dispose();
                         db = new AutoLepraTopDbContext();
@@ -117,7 +119,9 @@ namespace AutoLepraTop.BL.Managers
                 {
                     db.Comments.AddOrUpdate(dbcomment);
                 }
-                await db.SaveChangesWithIdentityAsync("Comments");
+
+                await db.BulkSaveChangesAsync(bulk => bulk.AllowUpdatePrimaryKeys = true);
+
                 db.Dispose();
                 db = new AutoLepraTopDbContext();
             }
@@ -168,7 +172,7 @@ namespace AutoLepraTop.BL.Managers
 
             var dbPosts = matches.Cast<Match>()
                     .Select(m => new DBPost {
-                        Id = int.Parse(m.Groups[1].Value)
+                        Id = int.Parse(m.Groups["id"].Value)
                     }).ToList();
 
             dbPosts.Add(new DBPost {
@@ -185,7 +189,8 @@ namespace AutoLepraTop.BL.Managers
                     }
                     db.Posts.AddOrUpdate(dbPost);
                 }
-                await db.SaveChangesWithIdentityAsync("Posts");
+
+                await db.BulkSaveChangesAsync(bulk => bulk.AllowUpdatePrimaryKeys = true);
             }
         }
 

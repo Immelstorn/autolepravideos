@@ -12,7 +12,8 @@ namespace AutoLepraTop.DB.Models
         public int Rating { get; set; }
         public DateTime Created { get; set; }
 
-        public Post Post { get; set; }
+        public virtual Post Post { get; set; }
+        public int Post_Id { get; set; }
 
         public override bool Equals(object obj)
         {
