@@ -7,7 +7,7 @@
         var list = function (page, sort) {
           
             api.getList(page, sort).then(function (response) {
-                $scope.Comments = response.data.Comments;
+                $scope.comments = response.data.Comments;
                 $scope.totalItems = response.data.TotalItems;
                 $scope.itemsPerPage =  response.data.ItemsPerPage;
                 $scope.currentPage = response.data.Page;
@@ -15,7 +15,7 @@
         };
 
         $scope.setPage = function () {
-            search($scope.searchQuery);
+            list($scope.currentPage, $routeParams.sort);
         };
 
         $scope.maxSize = 5;

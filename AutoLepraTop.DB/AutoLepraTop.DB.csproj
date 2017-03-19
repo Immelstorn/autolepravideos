@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201703191435058_changeIdsLogic.Designer.cs">
       <DependentUpon>201703191435058_changeIdsLogic.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703191959574_addCode.cs" />
+    <Compile Include="Migrations\201703191959574_addCode.Designer.cs">
+      <DependentUpon>201703191959574_addCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoLepraTopDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -109,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703191435058_changeIdsLogic.resx">
       <DependentUpon>201703191435058_changeIdsLogic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703191959574_addCode.resx">
+      <DependentUpon>201703191959574_addCode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

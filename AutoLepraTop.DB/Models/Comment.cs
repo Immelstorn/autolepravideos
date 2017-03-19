@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoLepraTop.DB.Models
 {
@@ -9,6 +8,7 @@ namespace AutoLepraTop.DB.Models
         public int LepraId { get; set; }
         public string Body { get; set; }
         public string Link { get; set; }
+        public string VideoCode { get; set; }
         public int Rating { get; set; }
         public DateTime Created { get; set; }
 

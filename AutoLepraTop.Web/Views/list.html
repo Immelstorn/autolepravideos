@@ -2,19 +2,27 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Rating</th>
-            <th>Body</th>
-            <th>Link</th>
+            <th width="10%">Date</th>
+            <th width="10%">Rating</th>
+            <th width="60%">Body</th>
+            <th width="10%">Youtube</th>
+            <th width="10%">Link</th>
         </tr>
         </thead>
         <tbody>
         
-        <tr ng-repeat="comment in Comments">
-            <td>{{comment.Created}}</td>
+        <tr ng-repeat="comment in comments">
+            <td class="created">{{comment.Created}}</td>
             <td>{{comment.Rating}}</td>
-            <td ng-bind-html="comment.Body"></td>
-            <td><a target="_blank" href="https://auto.leprosorium.ru/comments/{{comment.PostID}}/#{{comment.CommentID}}">Go to comment</a></td>
+            <td class="commentBody" ng-bind-html="comment.Body"></td>
+            <td>
+                <a target="_blank" href="http://youtu.be/{{comment.Code}}">
+                    <img class="youtubePreview" ng-src="http://img.youtube.com/vi/{{comment.Code}}/0.jpg">
+                </a>
+            </td>
+            <td>
+                <a target="_blank" href="https://auto.leprosorium.ru/comments/{{comment.PostID}}/#{{comment.CommentID}}">Go to comment</a>
+            </td>
         </tr>
         </tbody>
     </table>

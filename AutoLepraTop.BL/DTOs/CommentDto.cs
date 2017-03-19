@@ -14,7 +14,8 @@ namespace AutoLepraTop.BL.Models
                 PostID = c.Post.LepraId;
                 Rating = c.Rating;
                 Body = c.Body;
-                Created = c.Created;
+                Code = c.VideoCode;
+                Created = c.Created.ToString("dd-MM-yyyy HH:mm");
             }
         }
 
@@ -22,6 +23,7 @@ namespace AutoLepraTop.BL.Models
         public int PostID { get; set; }
         public int Rating { get; set; }
         public string Body { get; set; }
-        public DateTime Created { get; set; }
+        public string Code { get; set; }
+        public string Created { get; set; }
     }
 }

@@ -1,3 +1,9 @@
-img {
+.commentBody img {
     width: 480px;
+}
+.youtubePreview {
+    width: 96px;
+}
+.created {
+    text-align: center;
 }

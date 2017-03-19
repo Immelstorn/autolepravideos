@@ -1,6 +1,6 @@
 ﻿(function() {
 
-    var app = angular.module("autoLepraTop", ["ngRoute", /*"ngAnimate", */"ngSanitize", "ui.bootstrap"]);
+    var app = angular.module("autoLepraTop", ["ngRoute", "ngSanitize", "ui.bootstrap"]);
 
     app.config([
         "$locationProvider", function($locationProvider) {

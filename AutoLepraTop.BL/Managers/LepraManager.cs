@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -116,15 +115,23 @@ namespace AutoLepraTop.BL.Managers
                     var match = r.Match(comment.Body);
                     if(match.Success)
                     {
-                        var dbcomment = new DBComment {
-                            Body = comment.Body,
-                            LepraId = comment.ID,
-                            Link = match.Groups["link"].Value,
-                            Rating = comment.Rating,
-                            Created = UnixTimeStampToDateTime(comment.Created),
-                            Post_Id = post.Id
-                        };
-                        dbcomments.Add(dbcomment);
+                        var link = match.Groups["link"].Value;
+
+                        var code = GetCode(link);
+                        if(!string.IsNullOrEmpty(code))
+                        {
+                            var dbcomment = new DBComment
+                            {
+                                Body = comment.Body,
+                                LepraId = comment.ID,
+                                Link = link,
+                                VideoCode = code,
+                                Rating = comment.Rating,
+                                Created = UnixTimeStampToDateTime(comment.Created),
+                                Post_Id = post.Id
+                            };
+                            dbcomments.Add(dbcomment);
+                        }
                     }
 
 //                    saving each 250 comments to avoid EF hanging
@@ -172,6 +179,31 @@ namespace AutoLepraTop.BL.Managers
             }
             Debug.WriteLine($"Done");
             Debug.WriteLine($"Time elapsed: {DateTime.Now - start}");
+        }
+
+        private static string GetCode(string link)
+        {
+            var code = string.Empty;
+            if(link.Contains("v="))
+            {
+                var v = link.Substring(link.IndexOf("v=", StringComparison.Ordinal) + "v=".Length);
+                code = v.Contains("&") ? v.Substring(0, v.IndexOf("&", StringComparison.Ordinal)) : v;
+            }
+            else if(link.Contains("/embed/"))
+            {
+                code = link.Substring(link.IndexOf("/embed/", StringComparison.Ordinal) + "/embed/".Length);
+            }
+            else if(link.Contains("youtu.be/"))
+            {
+                var v = link.Substring(link.IndexOf("youtu.be/", StringComparison.Ordinal) + "youtu.be/".Length);
+                code = v.Contains("?") ? v.Substring(0, v.IndexOf("?", StringComparison.Ordinal)) : v;
+            }
+            else if(link.Contains("/user/") && link.Contains("#"))
+            {
+                var lastSlash = link.LastIndexOf("/", StringComparison.Ordinal);
+                code = link.Substring(lastSlash + 1, link.Length - lastSlash - 1);
+            }
+            return code;
         }
 
         private static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
