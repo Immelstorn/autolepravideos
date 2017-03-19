@@ -21,7 +21,7 @@ namespace AutoLepraTop.API.Controllers
 
         public IHttpActionResult Get()
         {
-            return Ok();
+            return Ok("ok");
         }
 
     }
