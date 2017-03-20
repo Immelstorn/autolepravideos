@@ -37,68 +37,86 @@ namespace AutoLepraTop.BL.Managers
 
         public async void CheckAndUpdateDbIfNeeded()
         {
-            using (var db = new AutoLepraTopDbContext())
+            try
             {
-                var lastUpdatedSetting = await db.Settings.FirstOrDefaultAsync(s => s.Name.Equals(LastUpdatedName));
-                var lastUpdated = lastUpdatedSetting == null ? DateTime.MinValue : DateTime.Parse(lastUpdatedSetting.Value);
-                if(DateTime.UtcNow - lastUpdated >= TimeSpan.FromHours(24))
+                using (var db = new AutoLepraTopDbContext())
                 {
-                    if(lastUpdatedSetting == null)
+                    var lastUpdatedSetting = await db.Settings.FirstOrDefaultAsync(s => s.Name.Equals(LastUpdatedName));
+                    var lastUpdated = lastUpdatedSetting == null ? DateTime.MinValue : DateTime.Parse(lastUpdatedSetting.Value);
+                    if (DateTime.UtcNow - lastUpdated >= TimeSpan.FromHours(24))
                     {
-                        db.Settings.Add(new Setting {
-                            Name = LastUpdatedName,
-                            Value = DateTime.UtcNow.ToString()
-                        });
-                    }
-                    else
-                    {
-                        lastUpdatedSetting.Value = DateTime.UtcNow.ToString();
-                    }
-                    await db.SaveChangesAsync();
-                    try
-                    {
-                        await ParseVideos();
-                    }
-                    catch (Exception e)
-                    {
-                        var ex = e;
-                        Trace.TraceError(ex.Message);
-                        while (ex.InnerException != null)
+                        if (lastUpdatedSetting == null)
                         {
-                            ex = ex.InnerException;
-                            Trace.TraceError(ex.Message);
+                            db.Settings.Add(new Setting
+                            {
+                                Name = LastUpdatedName,
+                                Value = DateTime.UtcNow.ToString()
+                            });
                         }
+                        else
+                        {
+                            lastUpdatedSetting.Value = DateTime.UtcNow.ToString();
+                        }
+                        await db.SaveChangesAsync();
+                        await ParseVideos();
+
+
                     }
                 }
             }
+            catch (Exception e)
+            {
+                var ex = e;
+                Trace.TraceError(ex.Message);
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    Trace.TraceError(ex.Message);
+                }
+            }
+            
         }
 
         public async Task<ListDto<CommentDto>> Get(int page, string sort)
         {
-            using (var db = new AutoLepraTopDbContext())
+            try
             {
-                var query = db.Comments as IQueryable<DBComment>;
-                
-                var count = await query.CountAsync();
-                query = sort.ToLowerInvariant().Equals("bydate") 
-                    ? query.OrderByDescending(c => c.Created) 
-                    : query.OrderByDescending(c => c.Rating);
-
-                query = query
-                        .Skip((page - 1) * PageSize)
-                        .Take(PageSize);
-
-                var comments = await query.ToListAsync();
-
-                var result = new ListDto<CommentDto>
+                using (var db = new AutoLepraTopDbContext())
                 {
-                    Comments = comments.Select(c => new CommentDto(c)).ToList(),
-                    Page = page,
-                    TotalItems = count,
-                    ItemsPerPage = PageSize,
-                };
-                return result;
+                    var query = db.Comments as IQueryable<DBComment>;
+
+                    var count = await query.CountAsync();
+                    query = sort.ToLowerInvariant().Equals("bydate")
+                        ? query.OrderByDescending(c => c.Created)
+                        : query.OrderByDescending(c => c.Rating);
+
+                    query = query
+                            .Skip((page - 1) * PageSize)
+                            .Take(PageSize);
+
+                    var comments = await query.ToListAsync();
+
+                    var result = new ListDto<CommentDto>
+                    {
+                        Comments = comments.Select(c => new CommentDto(c)).ToList(),
+                        Page = page,
+                        TotalItems = count,
+                        ItemsPerPage = PageSize,
+                    };
+                    return result;
+                }
             }
+            catch (Exception e)
+            {
+                var ex = e;
+                Trace.TraceError(ex.Message);
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    Trace.TraceError(ex.Message);
+                }
+            }
+            return null;
         }
 
         private async Task ParseVideos()
