@@ -96,16 +96,16 @@ namespace AutoLepraTop.BL.Managers
             var db = new AutoLepraTopDbContext();
 
             var posts = await db.Posts.ToListAsync();
-            var count = 1;
+//            var count = 1;
             var start = DateTime.Now;
             foreach(var post in posts)
             {
-                Debug.WriteLine($"Post {count++}");
+//                Debug.WriteLine($"Post {count++}");
                 var r = new Regex("href=\"(?<link>https?:\\/\\/(www.)?(m.)?(youtube|youtu\\.be).*?)\"");
 
                 var comments = await GetPostComments(post.LepraId);
                 var dbcomments = new List<DBComment>();
-                Debug.WriteLine($"Comments {comments.Count}");
+//                Debug.WriteLine($"Comments {comments.Count}");
                 foreach(var comment in comments)
                 {
                     if(string.IsNullOrEmpty(comment.Body))
@@ -137,7 +137,7 @@ namespace AutoLepraTop.BL.Managers
 //                    saving each 250 comments to avoid EF hanging
                     if(dbcomments.Count >= CommentsToSave)
                     {
-                        Debug.WriteLine($"Inserting {CommentsToSave} dbcomments");
+//                        Debug.WriteLine($"Inserting {CommentsToSave} dbcomments");
                         foreach (var dbcomment in dbcomments)
                         {
                             var existing = await db.Comments.Where(c => c.LepraId.Equals(dbcomment.LepraId)).FirstOrDefaultAsync();
@@ -157,7 +157,7 @@ namespace AutoLepraTop.BL.Managers
                         db = new AutoLepraTopDbContext();
                     }
                 }
-                Debug.WriteLine($"Inserting {dbcomments.Count} dbcomments");
+//                Debug.WriteLine($"Inserting {dbcomments.Count} dbcomments");
 
                 foreach(var dbcomment in dbcomments)
                 {
