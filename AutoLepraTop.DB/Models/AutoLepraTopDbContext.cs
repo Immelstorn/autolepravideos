@@ -5,8 +5,7 @@ namespace AutoLepraTop.DB.Models
 {
     public class AutoLepraTopDbContext: DbContext
     {
-        private static string _connString = ConfigurationManager.AppSettings["AzureDbConnection"];
-        public AutoLepraTopDbContext(): base(_connString) { }
+        public AutoLepraTopDbContext(): base("AzureDb") { }
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
