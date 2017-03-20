@@ -22,9 +22,9 @@
 </head>
 
 <body ng-controller="BaseController">
-    
+
 <div class="container">
-  <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#/list">Auto lepra videos top</a>
@@ -33,6 +33,9 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#/list?sort=bydate">By date</a></li>
                     <li><a href="#/list?sort=byrating">By rating</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>Last updated {{lastUpdated}}</li>
                 </ul>
             </div>
         </div>
@@ -44,7 +47,7 @@
 
 
     <div ng-view></div>
-    
+
     <div id="loader" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -52,11 +55,40 @@
                     <h4 class="modal-title">Please wait while videos are loading</h4>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="images/loading_spinner.gif" />
+                    <img src="images/loading_spinner.gif"/>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter26766504 = new Ya.Metrika({
+                    id:26766504,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/26766504" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 </body>
 </html>
