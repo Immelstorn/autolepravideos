@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AutoLepraTop.BL.Models
 {
@@ -8,5 +9,6 @@ namespace AutoLepraTop.BL.Models
         public int Page { get; set; }
         public int TotalItems { get; set; }
         public int ItemsPerPage { get; set; }
+        public string LastUpdated { get; set; }
     }
 }
