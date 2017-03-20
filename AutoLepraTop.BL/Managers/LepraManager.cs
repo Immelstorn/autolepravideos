@@ -112,12 +112,12 @@ namespace AutoLepraTop.BL.Managers
             var start = DateTime.Now;
             foreach(var post in posts)
             {
-                Trace.TraceInformation($"Post {count++}");
+                Trace.TraceInformation("Post {0}", count++);
                 var r = new Regex("href=\"(?<link>https?:\\/\\/(www.)?(m.)?(youtube|youtu\\.be).*?)\"");
 
                 var comments = await GetPostComments(post.LepraId);
                 var dbcomments = new List<DBComment>();
-                Trace.TraceInformation($"Comments {comments.Count}");
+                Trace.TraceInformation("Comments {0}", comments.Count);
                 foreach(var comment in comments)
                 {
                     if(string.IsNullOrEmpty(comment.Body))
@@ -149,7 +149,7 @@ namespace AutoLepraTop.BL.Managers
 //                    saving each 250 comments to avoid EF hanging
                     if(dbcomments.Count >= CommentsToSave)
                     {
-                        Trace.TraceInformation($"Inserting {CommentsToSave} dbcomments");
+                        Trace.TraceInformation("Inserting {0} dbcomments", CommentsToSave);
                         foreach (var dbcomment in dbcomments)
                         {
                             var existing = await db.Comments.Where(c => c.LepraId.Equals(dbcomment.LepraId)).FirstOrDefaultAsync();
@@ -169,7 +169,7 @@ namespace AutoLepraTop.BL.Managers
                         db = new AutoLepraTopDbContext();
                     }
                 }
-                Trace.TraceInformation($"Inserting {dbcomments.Count} dbcomments");
+                Trace.TraceInformation("Inserting {0} dbcomments", dbcomments.Count);
 
                 foreach(var dbcomment in dbcomments)
                 {
@@ -189,8 +189,8 @@ namespace AutoLepraTop.BL.Managers
                 db.Dispose();
                 db = new AutoLepraTopDbContext();
             }
-            Debug.WriteLine($"Done");
-            Debug.WriteLine($"Time elapsed: {DateTime.Now - start}");
+            Trace.TraceInformation("Done");
+            Trace.TraceInformation("Time elapsed: {0}", DateTime.Now - start);
         }
 
         private static string GetCode(string link)
@@ -293,7 +293,7 @@ namespace AutoLepraTop.BL.Managers
 
         private async Task<List<Comment>> GetPostComments(int id)
         {
-            var request = new RestRequest($"posts/{id}/comments/");
+            var request = new RestRequest(string.Format("posts/{0}/comments/", id));
             request.AddHeader("Authorization", _token);
             var comments = new List<Comment>();
 
