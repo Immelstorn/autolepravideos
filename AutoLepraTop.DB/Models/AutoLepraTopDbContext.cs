@@ -1,10 +1,12 @@
-﻿using System.Data.Entity;
+﻿using System.Configuration;
+using System.Data.Entity;
 
 namespace AutoLepraTop.DB.Models
 {
     public class AutoLepraTopDbContext: DbContext
     {
-        public AutoLepraTopDbContext(): base("AzureDb") { }
+        private static string _connString = ConfigurationManager.AppSettings["AzureDbConnection"];
+        public AutoLepraTopDbContext(): base(_connString) { }
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
