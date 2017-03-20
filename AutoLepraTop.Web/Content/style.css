@@ -1,8 +1,10 @@
 .commentBody img {
     width: 480px;
+    height: auto;
 }
 .youtubePreview {
     width: 96px;
+    height: auto;
 }
 .created {
     text-align: center;
