@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,6 +19,11 @@ namespace AutoLepraTop.API.Controllers
 
         public AutoController()
         {
+            Trace.TraceError("error");
+            Trace.TraceWarning("warning");
+            Trace.TraceInformation("info");
+            Console.WriteLine("cw");
+            Debug.WriteLine("debug");
             Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
         }
 
