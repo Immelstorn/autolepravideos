@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLepraTop.API", "AutoLep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLepraTop.BL", "AutoLepraTop.BL\AutoLepraTop.BL.csproj", "{FA5C0A4F-F2DD-42E8-AC25-5CC240E6FC81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoLepraTop.Web", "AutoLepraTop.Web\AutoLepraTop.Web.csproj", "{D3291F85-7CB4-40F1-B147-BBB8E9D33059}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{FA5C0A4F-F2DD-42E8-AC25-5CC240E6FC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA5C0A4F-F2DD-42E8-AC25-5CC240E6FC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA5C0A4F-F2DD-42E8-AC25-5CC240E6FC81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3291F85-7CB4-40F1-B147-BBB8E9D33059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3291F85-7CB4-40F1-B147-BBB8E9D33059}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3291F85-7CB4-40F1-B147-BBB8E9D33059}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3291F85-7CB4-40F1-B147-BBB8E9D33059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
