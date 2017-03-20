@@ -29,8 +29,8 @@ namespace AutoLepraTop.BL.Managers
     {
         private const string Title = "странного хобби";
         private const string LastUpdatedName = "LastUpdated";
-        private const int CommentsToSave = 250;
-        private const int PageSize = 50;
+        private const int CommentsToSave = 100;
+        private const int PageSize = 25;
 
         private readonly string _token = "Bearer " + ConfigurationManager.AppSettings["token"];
         private readonly RestClient _client = new RestClient("https://leprosorium.ru/api/");
@@ -55,8 +55,20 @@ namespace AutoLepraTop.BL.Managers
                         lastUpdatedSetting.Value = DateTime.UtcNow.ToString();
                     }
                     await db.SaveChangesAsync();
-
-                    await ParseVideos();
+                    try
+                    {
+                        await ParseVideos();
+                    }
+                    catch (Exception e)
+                    {
+                        var ex = e;
+                        Trace.TraceError(ex.Message);
+                        while (ex.InnerException != null)
+                        {
+                            ex = ex.InnerException;
+                            Trace.TraceError(ex.Message);
+                        }
+                    }
                 }
             }
         }
