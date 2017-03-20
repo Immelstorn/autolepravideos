@@ -11,7 +11,7 @@
                 $scope.totalItems = response.data.TotalItems;
                 $scope.itemsPerPage =  response.data.ItemsPerPage;
                 $scope.currentPage = response.data.Page;
-                $scope.lastUpdated = response.data.LastUpdated;
+                $scope.$parent.lastUpdated = response.data.LastUpdated;
             });
         };
 
