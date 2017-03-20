@@ -19,11 +19,6 @@ namespace AutoLepraTop.API.Controllers
 
         public AutoController()
         {
-            Trace.TraceError("error");
-            Trace.TraceWarning("warning");
-            Trace.TraceInformation("info");
-            Console.WriteLine("cw");
-            Debug.WriteLine("debug");
             Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
         }
 
