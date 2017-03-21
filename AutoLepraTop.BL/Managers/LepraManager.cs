@@ -77,15 +77,28 @@ namespace AutoLepraTop.BL.Managers
             
         }
 
-        public async Task<ListDto<CommentDto>> Get(int page, string sort)
+        public async Task<ListDto<CommentDto>> Get(int page, string sort, string from, string to)
         {
             try
             {
-                using (var db = new AutoLepraTopDbContext())
+                using(var db = new AutoLepraTopDbContext())
                 {
                     var query = db.Comments as IQueryable<DBComment>;
 
                     var count = await query.CountAsync();
+                    DateTime fromDate;
+                    DateTime toDate;
+
+                    if(DateTime.TryParse(from, out fromDate) && DateTime.TryParse(to, out toDate))
+                    {
+                        query = query.Where(c => c.Created >= fromDate && c.Created <= toDate);
+                    }
+                    else
+                    {
+                        fromDate = db.Comments.Min(c => c.Created);
+                        toDate = db.Comments.Max(c => c.Created);
+                    }
+
                     query = sort.ToLowerInvariant().Equals("bydate")
                         ? query.OrderByDescending(c => c.Created)
                         : query.OrderByDescending(c => c.Rating);
@@ -97,15 +110,15 @@ namespace AutoLepraTop.BL.Managers
                     var comments = await query.ToListAsync();
                     var lastUpdated = await db.Settings.FirstOrDefaultAsync(s => s.Name.Equals(LastUpdatedName));
 
-                    var result = new ListDto<CommentDto>
-                    {
+                    return new ListDto<CommentDto> {
                         Comments = comments.Select(c => new CommentDto(c)).ToList(),
                         Page = page,
                         TotalItems = count,
                         ItemsPerPage = PageSize,
-                        LastUpdated = lastUpdated.Value
+                        LastUpdated = lastUpdated.Value,
+                        From = fromDate,
+                        To = toDate
                     };
-                    return result;
                 }
             }
             catch (Exception e)

@@ -10,5 +10,7 @@ namespace AutoLepraTop.BL.Models
         public int TotalItems { get; set; }
         public int ItemsPerPage { get; set; }
         public string LastUpdated { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
     }
 }

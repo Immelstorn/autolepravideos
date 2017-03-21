@@ -22,9 +22,9 @@ namespace AutoLepraTop.API.Controllers
             Task.Factory.StartNew(() => _manager.CheckAndUpdateDbIfNeeded());
         }
 
-        public async Task<JsonResult<ListDto<CommentDto>>> Get(int page = 1, string sort = "byrating")
+        public async Task<JsonResult<ListDto<CommentDto>>> Get(int page = 1, string sort = "byrating", string from = "", string to = "")
         {
-            var result = await _manager.Get(page, sort);
+            var result = await _manager.Get(page, sort, from, to);
             return Json(result);
         }
 
