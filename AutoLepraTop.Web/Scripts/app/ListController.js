@@ -2,7 +2,7 @@
 
     var app = angular.module("autoLepraTop");
 
-    var ListController = function ($scope, $location, $routeParams, api) {
+    var ListController = function ($scope, $location, $routeParams, $window, api) {
 
         var list = function (page, sort) {
           
@@ -16,7 +16,6 @@
         };
 
         $scope.setPage = function () {
-            $routeParams.page = $scope.currentPage;
             list($scope.currentPage, $routeParams.sort);
             $window.scrollTo(0, 0);
         };
