@@ -11,12 +11,12 @@
         </thead>
         <tbody>
         
-        <tr ng-repeat="comment in comments">
+        <tr ng-repeat="comment in comments" youtube-popup-directive>
             <td class="created">{{comment.Created}}</td>
             <td>{{comment.Rating}}</td>
             <td class="commentBody" ng-bind-html="comment.Body"></td>
             <td>
-                <a target="_blank" href="http://youtu.be/{{comment.Code}}">
+                <a class="popup-youtube" href="https://www.youtube.com/watch?v={{comment.Code}}">
                     <img class="youtubePreview" ng-src="http://img.youtube.com/vi/{{comment.Code}}/0.jpg">
                 </a>
             </td>

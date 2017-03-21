@@ -49,8 +49,24 @@
             responseError: hideLoader
         }
     };
+    app.directive('youtubePopupDirective',
+        function() {
+            return function(scope, element, attrs) {
+                if (scope.$last) {
+                    $('.popup-youtube').magnificPopup({
+                        disableOn: 700,
+                        type: 'iframe',
+                        mainClass: 'mfp-fade',
+                        removalDelay: 160,
+                        preloader: false,
 
-    app.factory('httpInterceptor', httpInterceptor);
+                        fixedContentPos: false
+                    });
+                }
+            };
+        });
+
+  app.factory('httpInterceptor', httpInterceptor);
     app.config(function($httpProvider) {
         $httpProvider.interceptors.push('httpInterceptor');
     });

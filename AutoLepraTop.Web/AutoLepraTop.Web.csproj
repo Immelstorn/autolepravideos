@@ -60,7 +60,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\magnific-popup.css" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\third-party\jquery.magnific-popup.js" />
+    <Content Include="Scripts\third-party\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\third-party\angular.min.js.map" />
     <Content Include="Scripts\third-party\angular-route.min.js.map" />
     <Content Include="Scripts\third-party\jquery-1.9.1.min.map" />
