@@ -95,6 +95,7 @@ namespace AutoLepraTop.BL.Managers
                             .Take(PageSize);
 
                     var comments = await query.ToListAsync();
+                    var lastUpdated = await db.Settings.FirstOrDefaultAsync(s => s.Name.Equals(LastUpdatedName));
 
                     var result = new ListDto<CommentDto>
                     {
@@ -102,6 +103,7 @@ namespace AutoLepraTop.BL.Managers
                         Page = page,
                         TotalItems = count,
                         ItemsPerPage = PageSize,
+                        LastUpdated = lastUpdated.Value
                     };
                     return result;
                 }
