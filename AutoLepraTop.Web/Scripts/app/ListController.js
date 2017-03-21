@@ -16,7 +16,9 @@
         };
 
         $scope.setPage = function () {
+            $routeParams.page = $scope.currentPage;
             list($scope.currentPage, $routeParams.sort);
+            $window.scrollTo(0, 0);
         };
 
         $scope.maxSize = 5;

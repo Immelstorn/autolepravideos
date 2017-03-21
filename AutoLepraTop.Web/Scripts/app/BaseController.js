@@ -4,10 +4,6 @@
 
     var BaseController = function($scope, $location) {
 
-        $scope.search = function(searchQuery) {
-            $location.path("list").search({ search: searchQuery });
-        };
-
         $scope.showError = function(errorMsg) {
             if (errorMsg) {
                 $scope.error = errorMsg;
