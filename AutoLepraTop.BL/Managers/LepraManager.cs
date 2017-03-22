@@ -85,7 +85,6 @@ namespace AutoLepraTop.BL.Managers
                 {
                     var query = db.Comments as IQueryable<DBComment>;
 
-                    var count = await query.CountAsync();
                     DateTime fromDate;
                     DateTime toDate;
 
@@ -99,6 +98,7 @@ namespace AutoLepraTop.BL.Managers
                         toDate = db.Comments.Max(c => c.Created);
                     }
 
+                    var count = await query.CountAsync();
                     query = sort.ToLowerInvariant().Equals("bydate")
                         ? query.OrderByDescending(c => c.Created)
                         : query.OrderByDescending(c => c.Rating);
