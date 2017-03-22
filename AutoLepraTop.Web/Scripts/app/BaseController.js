@@ -2,7 +2,9 @@
 
     var app = angular.module("autoLepraTop");
 
-    var BaseController = function($scope, $location) {
+    var BaseController = function ($scope) {
+
+        $scope.datepicker = {};
 
         $scope.showError = function(errorMsg) {
             if (errorMsg) {

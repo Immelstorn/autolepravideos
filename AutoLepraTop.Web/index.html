@@ -11,11 +11,16 @@
     <script src="Scripts/third-party/jquery-1.9.1.min.js"></script>
     <script src="Scripts/third-party/bootstrap.min.js"></script>
     <script src="Scripts/third-party/jquery.magnific-popup.min.js"></script>
+    
+    <script src="Scripts/third-party/moment-with-locales.js"></script>
+    <script src="Scripts/third-party/angular-moment-picker.min.js"></script>
 
     <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/bootstrap-theme.min.css" rel="stylesheet"/>
     <link href="Content/magnific-popup.css" rel="stylesheet" />
+    <link href="Content/angular-moment-picker.min.css" rel="stylesheet" />
+
     <link href="Content/style.css" rel="stylesheet"/>
 
     <script src="Scripts/app/app.js"></script>
@@ -29,16 +34,55 @@
 <div class="container">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Videos</a>
+            </div>
+
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#/list?sort=bydate">By date</a></li>
-                    <li><a href="#/list?sort=byrating">By rating</a></li>
+                    <li><a href="#/list?sort=bydate">Sort by date</a></li>
+                    <li><a href="#/list?sort=byrating">Sort by rating</a></li>
                 </ul>
+                <p class="navbar-text">Date range:</p>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <div class="form-control datepicker"
+                             moment-picker="datepicker.stringFrom"
+                             ng-model="datepicker.momentFrom"
+                             format="YYYY-MM-DD"
+                             max-date="datepicker.momentTo"
+                             min-date="datepicker.minDate">
+                            <a class="pull-right"
+                               ng-if="datepicker.stringFrom"
+                               ng-click="datepicker.stringFrom = ''; ">
+                                &times;
+                            </a>
+                            <span ng-class="{'text-muted': !datepicker.stringFrom}">
+                                {{ datepicker.stringFrom || 'From' }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-control datepicker"
+                             moment-picker="datepicker.stringTo"
+                             ng-model="datepicker.momentTo"
+                             format="YYYY-MM-DD"
+                             max-date="datepicker.maxDate"
+                             min-date="datepicker.momentFrom">
+                            <a class="pull-right"
+                               ng-if="datepicker.stringTo"
+                               ng-click="datepicker.stringTo = ''">
+                                &times;
+                            </a>
+                            <span ng-class="{'text-muted': !datepicker.stringTo}">
+                                {{ datepicker.stringTo || 'To' }}
+                            </span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default" ng-click="filter()">Filter</button>
+                </form>
 
-               
-                <ul class="nav navbar-nav navbar-right">
-                    <li>{{lastUpdated}}</li>
-                </ul>
+                <p class="navbar-text navbar-right">Last update: {{lastUpdated}}</p>
             </div>
         </div>
     </nav>
@@ -47,7 +91,7 @@
         {{error}}
     </div>
 
-
+    
     <div ng-view></div>
 
     <div id="loader" class="modal fade" tabindex="-1" role="dialog">

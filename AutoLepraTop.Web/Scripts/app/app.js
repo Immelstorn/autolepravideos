@@ -1,6 +1,6 @@
 ﻿(function() {
 
-    var app = angular.module("autoLepraTop", ["ngRoute", "ngSanitize", "ui.bootstrap"]);
+    var app = angular.module("autoLepraTop", ["ngRoute", "ngSanitize", "ui.bootstrap", "moment-picker"]);
 
     app.config([
         "$locationProvider", function($locationProvider) {

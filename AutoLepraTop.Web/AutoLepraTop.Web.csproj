@@ -60,8 +60,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular-moment-picker.min.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\third-party\angular-moment-picker.min.js" />
     <Content Include="Scripts\third-party\jquery.magnific-popup.js" />
     <Content Include="Scripts\third-party\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\third-party\angular.min.js.map" />
@@ -113,6 +115,7 @@
     <Content Include="Scripts\third-party\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\third-party\angular.js" />
     <Content Include="Scripts\third-party\angular.min.js" />
+    <Content Include="Scripts\third-party\moment-with-locales.js" />
     <Content Include="Views\list.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

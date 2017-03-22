@@ -9,3 +9,7 @@
 .created {
     text-align: center;
 }
+
+.datepicker {
+    min-width: 120px;
+}
