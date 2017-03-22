@@ -115,9 +115,9 @@ namespace AutoLepraTop.BL.Managers
                         Page = page,
                         TotalItems = count,
                         ItemsPerPage = PageSize,
-                        LastUpdated = lastUpdated.Value,
-                        From = fromDate,
-                        To = toDate
+                        LastUpdated = DateTime.Parse(lastUpdated.Value).ToString("u"),
+                        From = fromDate.ToString("u"),
+                        To = toDate.ToString("u")
                     };
                 }
             }
