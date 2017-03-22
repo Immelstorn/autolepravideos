@@ -18,10 +18,10 @@
                 $scope.currentPage = response.data.Page;
 
                 $scope.$parent.lastUpdated = moment(response.data.LastUpdated).format("DD-MM-YYYY hh:mm A");
-                $scope.$parent.datepicker.minDate = moment(response.data.MinDate);
-                $scope.$parent.datepicker.maxDate = moment(response.data.MaxDate);
-                $scope.$parent.datepicker.momentFrom = moment(response.data.MinDate);
-                $scope.$parent.datepicker.momentTo = moment(response.data.MaxDate);
+                $scope.$parent.datepicker.minDate = moment(response.data.From);
+                $scope.$parent.datepicker.maxDate = moment(response.data.To);
+                $scope.$parent.datepicker.momentFrom = moment(response.data.From);
+                $scope.$parent.datepicker.momentTo = moment(response.data.To);
             });
         };
 
