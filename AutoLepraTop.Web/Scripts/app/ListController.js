@@ -4,13 +4,18 @@
 
     var ListController = function ($scope, $location,$route, $routeParams, $window, api) {
 
-        var list = function (page, sort) {
-          
-            api.getList(page, sort).then(function (response) {
+        var list = function(page, sort) {
+
+            var from = $routeParams.from;
+            var to = $routeParams.to;
+
+            api.getList(page, sort, from, to).then(function(response) {
                 $scope.comments = response.data.Comments;
                 $scope.totalItems = response.data.TotalItems;
-                $scope.itemsPerPage =  response.data.ItemsPerPage;
+                $scope.itemsPerPage = response.data.ItemsPerPage;
                 $scope.currentPage = response.data.Page;
+                $scope.from = response.data.From;
+                $scope.to = response.data.To;
                 $scope.$parent.lastUpdated = response.data.LastUpdated;
             });
         };
