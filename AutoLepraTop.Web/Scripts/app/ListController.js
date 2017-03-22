@@ -35,7 +35,8 @@
             var datePicker = $scope.$parent.datepicker;
             $route.updateParams({
                 from: datePicker.stringFrom,
-                to: datePicker.stringTo
+                to: datePicker.stringTo,
+                page: 1
             });
             list();
         }
@@ -44,7 +45,7 @@
         $scope.totalItems = 200;
         $scope.itemsPerPage = 25;
         $scope.currentPage = 1;
-
+        $scope.$parent.datepicker = {};
         $scope.$parent.showError();
         list();
     };
