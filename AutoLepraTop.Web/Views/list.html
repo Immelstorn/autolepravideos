@@ -1,31 +1,23 @@
-﻿<div>
+﻿<div ng-hide="hideMain">
+    <ul uib-pagination total-items="totalItems" ng-change="setPage()" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
+
     <table class="table table-striped">
-        <thead>
-        <tr>
-            <th width="10%">Date</th>
-            <th width="10%">Rating</th>
-            <th width="60%">Body</th>
-            <th width="10%">Youtube</th>
-            <th width="10%">Link</th>
-        </tr>
-        </thead>
         <tbody>
-        
         <tr ng-repeat="comment in comments" youtube-popup-directive>
-            <td class="created">{{comment.Created}}</td>
-            <td>{{comment.Rating}}</td>
-            <td class="commentBody" ng-bind-html="comment.Body"></td>
-            <td>
-                <a class="popup-youtube" href="https://www.youtube.com/watch?v={{comment.Code}}">
+            <td width="10%" class="created"><span title="Date and time when comment was created">{{comment.Created}}</span></td>
+            <td width="10%"><span title="Rating">{{comment.Rating}}</span></td>
+            <td width="60%" class="commentBody" ng-bind-html="comment.Body"></td>
+            <td width="10%">
+                <a title="Watch video" class="popup-youtube" href="https://www.youtube.com/watch?v={{comment.Code}}">
                     <img class="youtubePreview" ng-src="http://img.youtube.com/vi/{{comment.Code}}/0.jpg">
                 </a>
             </td>
-            <td>
+            <td width="10%">
                 <a target="_blank" href="https://auto.leprosorium.ru/comments/{{comment.PostID}}/#{{comment.CommentID}}">Go to comment</a>
             </td>
         </tr>
         </tbody>
     </table>
-   
+
     <ul uib-pagination total-items="totalItems" ng-change="setPage()" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
 </div>

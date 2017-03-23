@@ -86,26 +86,15 @@
             </div>
         </div>
     </nav>
-
     <div class="alert alert-danger" id="error" style="display: none;">
         {{error}}
     </div>
+    <div  id="loader" class="text-center">
+        <img src="images/loading_spinner.gif" />
+    </div>
 
-    
     <div ng-view></div>
 
-    <div id="loader" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Please wait while videos are loading</h4>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="images/loading_spinner.gif"/>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

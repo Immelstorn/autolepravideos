@@ -2,9 +2,11 @@
 
     var app = angular.module("autoLepraTop");
 
-    var BaseController = function ($scope) {
+    var BaseController = function ($scope, $rootScope) {
 
         $scope.datepicker = {};
+        $scope.lastUpdated = "";
+        $rootScope.hideMain = false;
 
         $scope.showError = function(errorMsg) {
             if (errorMsg) {
@@ -16,11 +18,6 @@
             }
         };
 
-        $('#loader').modal({
-            keyboard: false,
-            backdrop: false,
-            show: false
-        });
     };
    
     app.controller("BaseController", BaseController);

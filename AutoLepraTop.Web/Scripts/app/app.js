@@ -18,12 +18,14 @@
     });
 
 
-    var httpInterceptor = function() {
+    var httpInterceptor = function ($rootScope) {
         var requests = 0;
         var showLoader = function(config) {
             if (config.url.indexOf('/api/') >= 0) {
                 if (requests === 0) {
-                    $('#loader').modal('show');
+                    $('.main').hide();
+                    $rootScope.hideMain = true;
+                    $('#loader').show();
                 }
                 requests++;
             }
@@ -35,7 +37,9 @@
             if (config.url.indexOf('/api/') >= 0) {
                 requests--;
                 if (requests === 0) {
-                    $('#loader').modal('hide');
+                    $('#loader').hide();
+                    $('.main').show();
+                    $rootScope.hideMain = false;
                 }
             }
 
@@ -66,7 +70,7 @@
             };
         });
 
-  app.factory('httpInterceptor', httpInterceptor);
+    app.factory('httpInterceptor', ['$rootScope', httpInterceptor]);
     app.config(function($httpProvider) {
         $httpProvider.interceptors.push('httpInterceptor');
     });

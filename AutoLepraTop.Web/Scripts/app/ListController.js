@@ -47,6 +47,7 @@
         $scope.currentPage = 1;
         $scope.$parent.datepicker = {};
         $scope.$parent.showError();
+        
         list();
     };
 

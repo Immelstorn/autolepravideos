@@ -13,3 +13,8 @@
 .datepicker {
     min-width: 120px;
 }
+
+.table, .navbar {
+    margin-bottom: 0px;
+}
+
