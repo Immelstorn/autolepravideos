@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="Content\angular-moment-picker.min.css" />
     <Content Include="Content\magnific-popup.css" />
+    <Content Include="favicon.ico" />
     <Content Include="packages.config" />
     <Content Include="Scripts\third-party\angular-moment-picker.min.js" />
     <Content Include="Scripts\third-party\jquery.magnific-popup.js" />
